@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <include layout="@layout/toolbar"/>
+        <ImageView
+            android:id="@+id/ivTitle"
+            android:layout_width="@dimen/dimen_152dp"
+            android:layout_height="@dimen/dimen_28dp"
+            android:src="@drawable/logo"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <com.minilive.library.widget.BrowserLayout
+        android:id="@+id/blWebView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+</LinearLayout>
