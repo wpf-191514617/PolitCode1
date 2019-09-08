@@ -46,6 +46,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initViewAndData() {
+        ButterKnife.bind(this);
         setTitle("登录");
       //  inputPhone.getEditText().setInputType(InputType.TYPE_CLASS_PHONE);
         inputPassword.getEditText().setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
@@ -61,12 +62,6 @@ public class LoginActivity extends BaseActivity {
         return R.layout.activity_login;
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 
     @OnClick({R.id.btnLogin, R.id.tvRegister,R.id.tvForget})
     public void onViewClicked(View view) {

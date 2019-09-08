@@ -9,6 +9,7 @@ public class UserInfoRequest {
     public String realName;
     public String id;
     public String phone;
+    public String cardId;
     public String sessionId;
     public String timestamp;
     public String signature;

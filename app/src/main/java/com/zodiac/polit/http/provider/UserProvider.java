@@ -76,11 +76,12 @@ public class UserProvider extends BaseProvider{
         postJson("/airforce/rest/member/memberAuditHistory/list" , new Gson().toJson(applyStatus) , stringCallback);
     }
 
-    public static void updateUserInfo(String realName, String phone , StringCallback stringCallback){
+    public static void updateUserInfo(String realName, String phone ,String cardId, StringCallback stringCallback){
         UserInfoRequest userInfoRequest = new UserInfoRequest();
         userInfoRequest.id = CacheHelper.getInstance().getCurrentUser().getContent().getId();
         userInfoRequest.phone = phone;
         userInfoRequest.realName = realName;
+        userInfoRequest.cardId = cardId;
         RequestBean requestBean = AppHelper.getRequestBean();
         userInfoRequest.sessionId = requestBean.sessionId;
         userInfoRequest.signature = requestBean.signature;

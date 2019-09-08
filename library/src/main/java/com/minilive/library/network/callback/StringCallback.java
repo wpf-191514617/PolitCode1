@@ -13,7 +13,6 @@ public abstract class StringCallback extends Callback<String> {
     @Override
     public String parseNetworkResponse(Response response, int id) throws IOException {
         String res = response.body().string();
-        Trace.d("httpRequest", "response---------" + res);
         return res;
     }
 }

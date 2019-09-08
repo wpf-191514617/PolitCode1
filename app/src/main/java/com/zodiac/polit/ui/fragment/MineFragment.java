@@ -97,7 +97,8 @@ public class MineFragment extends BaseFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         unbinder = ButterKnife.bind(this, rootView);
@@ -111,7 +112,7 @@ public class MineFragment extends BaseFragment {
     }
 
     @OnClick({R.id.rvUserInfo, R.id.rvUpdatePwd, R.id.rvNotice, R.id.rvPolit,
-            R.id.rvHistory, R.id.btnLogout,R.id.rvMessage,R.id.rvSearch})
+            R.id.rvHistory, R.id.btnLogout, R.id.rvMessage, R.id.rvSearch})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rvUserInfo:
@@ -130,24 +131,26 @@ public class MineFragment extends BaseFragment {
                 jumpTo(SignupHistoryListActivity.class);
                 break;
             case R.id.rvMessage:
-                //  TODO   信息导航
                 Bundle bundle = new Bundle();
-                bundle.putString(WebActivity.KEY_WEB_URL , "http://m.kjzfw.mil.cn/personal-newsNav.html?p=1");
-                jumpTo(WebActivity.class , bundle);
+                bundle.putString(WebActivity.KEY_WEB_URL, "http://m.kjzfw.mil.cn/personal-newsNav" +
+                        ".html?p=1");
+                jumpTo(WebActivity.class, bundle);
                 break;
             case R.id.rvSearch:
                 jumpTo(SearchActivity.class);
                 break;
             case R.id.btnLogout:
                 if (mBuilder == null) {
-                    mBuilder = new AlertDialog.Builder(getActivity()).setMessage("是否退出？").setPositiveButton("确定",
+                    mBuilder =
+                            new AlertDialog.Builder(getActivity()).setMessage("是否退出？").setPositiveButton("确定",
                             new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                            EventBus.getDefault().post(new EventData(Constant.CODE_LOGOUT, "0"));
-                        }
-                    }).setNegativeButton("取消", null).create();
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                    EventBus.getDefault().post(new EventData(Constant.CODE_LOGOUT
+                                            , "0"));
+                                }
+                            }).setNegativeButton("取消", null).create();
                 }
                 mBuilder.show();
                 break;

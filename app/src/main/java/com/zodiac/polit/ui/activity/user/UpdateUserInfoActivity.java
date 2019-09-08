@@ -49,11 +49,11 @@ public class UpdateUserInfoActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         setTitle("修改个人信息");
-       // inputIDCard.getEditText().setBackgroundResource(R.drawable.bg_et_dd);
+        // inputIDCard.getEditText().setBackgroundResource(R.drawable.bg_et_dd);
         UserResponse userResponse = CacheHelper.getInstance().getCurrentUser();
         UserResponse.ContentBean contentBean = userResponse.getContent();
         if (contentBean != null) {
-          //  setText(tvName , "您好，" + contentBean.getRealName());
+            //  setText(tvName , "您好，" + contentBean.getRealName());
             inputRealName.setText(contentBean.getRealName());
             inputPhone.setText(contentBean.getPhone());
             inputIDCard.setText(contentBean.getCardId());
@@ -81,20 +81,22 @@ public class UpdateUserInfoActivity extends BaseActivity {
     public void onViewClicked() {
         String realName = inputRealName.getText();
         String phone = inputPhone.getText();
-        if (StringUtils.isEmpty(realName)){
+        if (StringUtils.isEmpty(realName)) {
             showToast("请输入真实姓名");
             return;
         }
-        if (!StringUtils.isMobileNO(phone)){
+        if (!StringUtils.isMobileNO(phone)) {
             showToast("请输入正确的手机号码");
             return;
         }
-        updateUserInfo(realName , phone);
+
+
+        updateUserInfo(realName, phone);
     }
 
     private void updateUserInfo(final String realName, final String phone) {
         showLoadingDialog();
-        UserProvider.updateUserInfo(realName, phone, new StringCallback() {
+        UserProvider.updateUserInfo(realName, phone, inputIDCard.getText(), new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
                 dismissLoadingDialog();
@@ -104,12 +106,12 @@ public class UpdateUserInfoActivity extends BaseActivity {
             @Override
             public void onResponse(String response, int id) {
                 dismissLoadingDialog();
-                ResponseBean responseBean = new Gson().fromJson(response , ResponseBean.class);
-                if (responseBean == null){
+                ResponseBean responseBean = new Gson().fromJson(response, ResponseBean.class);
+                if (responseBean == null) {
                     showToast("修改失败");
                     return;
                 }
-                if (!responseBean.getCode().equals("0")){
+                if (!responseBean.getCode().equals("0")) {
                     showToast(responseBean.getMessage());
                     if (responseBean.getCode().equals("400")) {
                         onLogout();
@@ -122,6 +124,7 @@ public class UpdateUserInfoActivity extends BaseActivity {
                 UserResponse.ContentBean contentBean = userResponse.getContent();
                 contentBean.setRealName(realName);
                 contentBean.setPhone(phone);
+                contentBean.setCardId(inputIDCard.getText());
                 userResponse.setContent(contentBean);
                 CacheHelper.getInstance().putCurrentUser(userResponse);
                 showToast("修改成功");

@@ -26,6 +26,7 @@ public class HomeProvider extends BaseProvider {
 
     /**
      * 问题
+     *
      * @param page
      * @param callback
      */
@@ -35,6 +36,7 @@ public class HomeProvider extends BaseProvider {
 
     /**
      * 政策
+     *
      * @param page
      * @param callback
      */
@@ -45,6 +47,7 @@ public class HomeProvider extends BaseProvider {
 
     /**
      * 公告
+     *
      * @param page
      * @param callback
      */
@@ -60,7 +63,7 @@ public class HomeProvider extends BaseProvider {
         homeRequest.setCategory(categoryBean);
 
         HomeRequest.AreaCodeBean areaCodeBean = new HomeRequest.AreaCodeBean();
-        if (StringUtils.isEmpty(Constant.cityCode)){
+        if (StringUtils.isEmpty(Constant.cityCode)) {
             areaCodeBean.setAreaCode("");
         } else {
             areaCodeBean.setAreaCode(Constant.cityCode);
@@ -69,74 +72,81 @@ public class HomeProvider extends BaseProvider {
 
         homeRequest.setPageNo(page);
         homeRequest.setPageSize(10);
-        postJson("/airforce/rest/cms/app/getAppArticleList", new Gson().toJson(homeRequest), callback);
+        postJson("/airforce/rest/cms/app/getAppArticleList", new Gson().toJson(homeRequest),
+                callback);
     }
 
-    public static void loadBanner(StringCallback stringCallback){
+    public static void loadBanner(StringCallback stringCallback) {
         CategoryRequest categoryRequest = new CategoryRequest();
         CategoryRequest.CategoryBean categoryBean = new CategoryRequest.CategoryBean();
         categoryBean.setId("75");
         categoryRequest.setCategory(categoryBean);
-        postJson("/airforce/rest/cms/article/findList" , new Gson().toJson(categoryRequest) , stringCallback);
+        postJson("/airforce/rest/cms/article/findList", new Gson().toJson(categoryRequest),
+                stringCallback);
     }
 
 
     /**
      * 首页数据
+     *
      * @param page
      * @param callback
      */
-    public static void loadHomeNewsData(int page, StringCallback callback){
+    public static void loadHomeNewsData(int page, StringCallback callback) {
         //loadNewsData("28" , page , callback);
-        loadNewsData("51,56",page,callback);
+        loadNewsData("51,56", page, callback);
     }
 
 
     /**
      * 要讯数据
+     *
      * @param page
      * @param callback
      */
-    public static void loadNewsDataById(String ids , int page, StringCallback callback){
-        loadNewsData(ids , page , callback);
+    public static void loadNewsDataById(String ids, int page, StringCallback callback) {
+        loadNewsData(ids, page, callback);
     }
 
 
-    private static void loadNewsData(String ids,int page , StringCallback stringCallback){
+    private static void loadNewsData(String ids, int page, StringCallback stringCallback) {
         NewsRequest newsRequest = new NewsRequest();
         newsRequest.setIds(ids);
         newsRequest.setPageNo(page);
         newsRequest.setPageSize(LIMIT);
         NewsRequest.AreaCodeBean areaCodeBean = new NewsRequest.AreaCodeBean();
-        if (!StringUtils.isEmpty(Constant.cityCode)){
+        if (!StringUtils.isEmpty(Constant.cityCode)) {
             areaCodeBean.setAreaCode(Constant.cityCode);
         } else {
             areaCodeBean.setAreaCode("");
         }
         newsRequest.setAreaCode(areaCodeBean);
-        postJson("/airforce/rest/cms/app/getAllContentList" , new Gson().toJson(newsRequest) , stringCallback);
+        postJson("/airforce/rest/cms/app/getAllContentList2", new Gson().toJson(newsRequest),
+                stringCallback);
     }
 
 
-    public static void loadNewsDetail(String ctId , String contentID , StringCallback callback){
+    public static void loadNewsDetail(String ctId, String contentID, StringCallback callback) {
         ContentRequest contentRequest = new ContentRequest();
         contentRequest.setCategoryId(ctId);
         contentRequest.setContentId(contentID);
-        patch("/airforce/rest/cms/article/getContent",new Gson().toJson(contentRequest) , callback);
+        patch("/airforce/rest/cms/article/getContent", new Gson().toJson(contentRequest), callback);
     }
 
-    public static void query(QueryRequest queryRequest, StringCallback stringCallback){
-        postJson("/airforce/rest/common/commonInfo/resultList",new Gson().toJson(queryRequest) , stringCallback);
+    public static void query(QueryRequest queryRequest, StringCallback stringCallback) {
+        postJson("/airforce/rest/common/commonInfo/resultList", new Gson().toJson(queryRequest),
+                stringCallback);
     }
 
 
-    public static void search(String key,int page , StringCallback stringCallback){
+    public static void search(String key, int page, StringCallback stringCallback) {
         SearchRequest searchRequest = new SearchRequest();
         searchRequest.ids = "28,41,51,44,59";
         searchRequest.title = key;
         searchRequest.pageNo = page;
         searchRequest.pageSize = LIMIT;
-        postJson("/airforce/rest/common/commonInfo/findSearchArticle" , new Gson().toJson(searchRequest),stringCallback);
+        postJson("/airforce/rest/common/commonInfo/findSearchArticle",
+                new Gson().toJson(searchRequest), stringCallback);
     }
 
 

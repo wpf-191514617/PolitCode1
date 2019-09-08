@@ -1,13 +1,19 @@
 package com.zodiac.polit.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.minilive.library.entity.EventData;
+import com.minilive.library.http.callback.OnJsonCallBack;
 import com.minilive.library.network.callback.StringCallback;
 import com.minilive.library.util.BaseAppManager;
 import com.minilive.library.util.StringUtils;
@@ -15,6 +21,8 @@ import com.minilive.library.util.Trace;
 import com.minilive.library.view.MainNavigateTabBar;
 import com.zodiac.polit.Constant;
 import com.zodiac.polit.R;
+import com.zodiac.polit.bean.response.UpdateResponse;
+import com.zodiac.polit.http.provider.AppProvider;
 import com.zodiac.polit.http.provider.OtherProvider;
 import com.zodiac.polit.ui.activity.SignupActivity;
 import com.zodiac.polit.ui.activity.user.LoginActivity;
@@ -25,6 +33,7 @@ import com.zodiac.polit.ui.fragment.QuestionChildFragment;
 import com.zodiac.polit.ui.fragment.QuestionFragment;
 import com.zodiac.polit.ui.fragment.SignupFragment;
 import com.zodiac.polit.ui.fragment.home.QueryFragment;
+import com.zodiac.polit.util.AppHelper;
 import com.zodiac.polit.util.CacheHelper;
 
 import de.greenrobot.event.EventBus;
@@ -73,16 +82,18 @@ public class MainActivity extends AppCompatActivity {
 
                 if (mCurrentIndex == 2) {
                     if (!CacheHelper.getInstance().isLogin()) {
-                        startActivityForResult(new Intent(MainActivity.this, LoginActivity.class), REQUEST_LOGIN);
+                        startActivityForResult(new Intent(MainActivity.this, LoginActivity.class)
+                                , REQUEST_LOGIN);
                     } else {
                         startActivity(new Intent(MainActivity.this, SignupActivity.class));
                     }
                     return false;
                 }
 
-                if (mCurrentIndex == 4){
+                if (mCurrentIndex == 4) {
                     if (!CacheHelper.getInstance().isLogin()) {
-                        startActivityForResult(new Intent(MainActivity.this, LoginActivity.class), REQUEST_LOGIN);
+                        startActivityForResult(new Intent(MainActivity.this, LoginActivity.class)
+                                , REQUEST_LOGIN);
                     }
                     return true;
                 }
@@ -94,7 +105,8 @@ public class MainActivity extends AppCompatActivity {
 
                 /*if (holder.tabIndex == 2 || holder.tabIndex == 4) {
                     if (!CacheHelper.getInstance().isLogin())
-                        startActivityForResult(new Intent(MainActivity.this, LoginActivity.class), REQUEST_LOGIN);
+                        startActivityForResult(new Intent(MainActivity.this, LoginActivity.class)
+                        , REQUEST_LOGIN);
 
                 }
 
@@ -119,6 +131,57 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        checkUpdate();
+
+    }
+
+    private void checkUpdate() {
+        AppProvider.checkUpdate(this, new OnJsonCallBack() {
+            @Override
+            public void onResult(Object data) {
+                try {
+                    if (data != null) {
+                        UpdateResponse response = new Gson().fromJson(data.toString(),
+                                UpdateResponse.class);
+                        if (response != null && response.getContent() != null) {
+                            final UpdateResponse.ContentBean contentBean = response.getContent();
+                            if (contentBean != null) {
+                                String versionName = contentBean.getAppVersion();
+                                if (!versionName.equals(AppHelper.getVersionName(MainActivity.this))) {
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            showVersionDialog(contentBean);
+                                        }
+                                    }, 2000);
+                                }
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+
+                }
+            }
+        });
+    }
+
+    private void showVersionDialog(final UpdateResponse.ContentBean contentBean) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle("检测到有新版本")
+                .setMessage(contentBean.getAppRemarks());
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                Uri uri = Uri.parse(Constant.BASEURL + contentBean.getAppUrl());
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        }).create().show();
     }
 
     private int mCurrentIndex = 0;

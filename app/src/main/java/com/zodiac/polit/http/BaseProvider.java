@@ -35,7 +35,7 @@ import okhttp3.RequestBody;
 
 public class BaseProvider {
 
-    public static final int LIMIT = 10;
+    public static final int LIMIT = 7;
     public static final int VALIDATE_ERROR = 450;
 
     protected BaseProvider() {
