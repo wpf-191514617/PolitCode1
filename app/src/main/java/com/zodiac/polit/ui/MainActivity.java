@@ -137,6 +137,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void checkUpdate() {
         AppProvider.checkUpdate(this, new OnJsonCallBack() {
+
+            @Override
+            public void onError(String msg) {
+                super.onError(msg);
+            }
+
             @Override
             public void onResult(Object data) {
                 try {

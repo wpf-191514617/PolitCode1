@@ -145,7 +145,7 @@ public class ConnectUsFragment extends BaseRecyclerFragment{
             }
 
             final ImageView ivCode = helper.getImageView(R.id.ivCode);
-            if (position == 1){
+           /* if (position == 1){
                 ivCode.setImageResource(R.drawable.weixin_shenyang);
                 ivCode.setVisibility(View.VISIBLE);
             } else if (position == 2){
@@ -167,7 +167,7 @@ public class ConnectUsFragment extends BaseRecyclerFragment{
                 //ivCode.setImageResource(R.drawable.weixin_);
                 //ivCode.setVisibility(View.VISIBLE);
                 ivCode.setVisibility(View.GONE);
-            }
+            }*/
 
             ivCode.setOnClickListener(new View.OnClickListener() {
                 @Override

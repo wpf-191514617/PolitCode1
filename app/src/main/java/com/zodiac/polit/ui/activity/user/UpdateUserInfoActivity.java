@@ -116,8 +116,6 @@ public class UpdateUserInfoActivity extends BaseActivity {
                     if (responseBean.getCode().equals("400")) {
                         onLogout();
                     }
-                  /*  showToast(responseBean.getMessage());
-                    EventBus.getDefault().post(new EventData(Constant.CODE_INVALID));*/
                     return;
                 }
                 UserResponse userResponse = CacheHelper.getInstance().getCurrentUser();
