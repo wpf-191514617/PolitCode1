@@ -9,7 +9,7 @@ import com.baidu.location.BDLocation;
 public class Constant {
 
     public static final String CACHE_NAME = "polit.cache";
-    public static String cityCode = "610100";
+    public static String cityCode = "610000";
     public static BDLocation location;
 
     public static String BASEURL = "http://service.kjzfw.mil.cn";

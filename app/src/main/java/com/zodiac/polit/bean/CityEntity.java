@@ -13,12 +13,8 @@ public class CityEntity implements BaseEntity, Parcelable {
 
     private String code;
     private String name;
+    private String parentCode;
 
-
-    @Override
-    public String getIndexField() {
-        return name;
-    }
 
     public String getCode() {
         return code;
@@ -36,6 +32,19 @@ public class CityEntity implements BaseEntity, Parcelable {
         this.name = name;
     }
 
+    public String getParentCode() {
+        return parentCode;
+    }
+
+    public void setParentCode(String parentCode) {
+        this.parentCode = parentCode;
+    }
+
+    @Override
+    public String getIndexField() {
+        return name;
+    }
+
 
     @Override
     public int describeContents() {
@@ -46,6 +55,7 @@ public class CityEntity implements BaseEntity, Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.code);
         dest.writeString(this.name);
+        dest.writeString(this.parentCode);
     }
 
     public CityEntity() {
@@ -54,6 +64,7 @@ public class CityEntity implements BaseEntity, Parcelable {
     protected CityEntity(Parcel in) {
         this.code = in.readString();
         this.name = in.readString();
+        this.parentCode = in.readString();
     }
 
     public static final Creator<CityEntity> CREATOR = new Creator<CityEntity>() {

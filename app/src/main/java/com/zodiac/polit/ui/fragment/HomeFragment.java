@@ -3,7 +3,6 @@ package com.zodiac.polit.ui.fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -141,7 +140,7 @@ public class HomeFragment extends BaseFragment {
         if (requestCode == REQUEST_CITY && resultCode == Activity.RESULT_OK) {
             CityEntity cityEntity = data.getParcelableExtra("result");
             if (cityEntity != null) {
-                Constant.cityCode = cityEntity.getCode();
+                Constant.cityCode = cityEntity.getParentCode();
                 //setText(tvAddress, cityEntity.getName());
                 setAddressText(cityEntity.getName());
                 EventBus.getDefault().post(new EventData(Constant.CODE_CITY1));
@@ -188,7 +187,6 @@ public class HomeFragment extends BaseFragment {
             return mTitle.length;
         }
 
-        @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
             return mTitle[position];

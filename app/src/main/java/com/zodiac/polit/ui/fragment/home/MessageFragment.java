@@ -108,7 +108,7 @@ public class MessageFragment extends BaseRecyclerFragment {
     protected void onEventComming(EventData eventData) {
         super.onEventComming(eventData);
         if (eventData.getCODE() == Constant.CODE_CITY1){
-            onRefresh(refreshLayout);
+            refreshLayout.autoRefresh();
         }
     }
 

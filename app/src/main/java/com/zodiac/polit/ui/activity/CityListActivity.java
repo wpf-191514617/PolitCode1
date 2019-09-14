@@ -48,6 +48,7 @@ public class CityListActivity extends BaseActivity implements OnItemClickListene
 
     @Override
     protected void initViewAndData() {
+        ButterKnife.bind(this);
         setTitle("选择城市");
         Intent intent = getIntent();
         if(intent.getParcelableExtra("city") != null){
@@ -67,12 +68,7 @@ public class CityListActivity extends BaseActivity implements OnItemClickListene
         return R.layout.activity_select_city;
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+
 
     private List<CityEntity> loadCityData() {
         String JsonData = new GetJsonDataUtil().getJson(this, "city.json");
@@ -92,6 +88,7 @@ public class CityListActivity extends BaseActivity implements OnItemClickListene
                     CityEntity cityEntity = new CityEntity();
                     cityEntity.setCode(beanX.getCode());
                     cityEntity.setName(beanX.getName());
+                    cityEntity.setParentCode(cityBean.getCode());
                     cityEntities.add(cityEntity);
                 }
             }
