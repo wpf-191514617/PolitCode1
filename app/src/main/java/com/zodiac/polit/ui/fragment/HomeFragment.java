@@ -98,7 +98,8 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         unbinder = ButterKnife.bind(this, rootView);
@@ -111,9 +112,9 @@ public class HomeFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.layoutAddress,R.id.ivSearch})
+    @OnClick({R.id.layoutAddress, R.id.ivSearch})
     public void onViewClicked(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.ivSearch:
                 jumpTo(SearchActivity.class);
                 break;
@@ -126,7 +127,7 @@ public class HomeFragment extends BaseFragment {
                 String code = locationObj != null ? locationObj.getAdCode() : "110102";*/
                 CityEntity cityEntity = new CityEntity();
                 cityEntity.setName(tvAddress.getText().toString());
-                cityEntity.setCode(Constant.cityCode);
+                cityEntity.setCode(Constant.getInstance().getCityCode());
                 bundle.putParcelable("city", cityEntity);
                 jumpToForResult(CityListActivity.class, REQUEST_CITY, bundle);
                 break;
@@ -140,7 +141,7 @@ public class HomeFragment extends BaseFragment {
         if (requestCode == REQUEST_CITY && resultCode == Activity.RESULT_OK) {
             CityEntity cityEntity = data.getParcelableExtra("result");
             if (cityEntity != null) {
-                Constant.cityCode = cityEntity.getParentCode();
+                Constant.getInstance().setCityCode(cityEntity.getParentCode());
                 //setText(tvAddress, cityEntity.getName());
                 setAddressText(cityEntity.getName());
                 EventBus.getDefault().post(new EventData(Constant.CODE_CITY1));
@@ -148,10 +149,10 @@ public class HomeFragment extends BaseFragment {
         }
     }
 
-    private void setAddressText(String address){
-        if (!StringUtils.isEmpty(address)){
-            if (address.length() > 4){
-                address = address.substring(0,4) + "...";
+    private void setAddressText(String address) {
+        if (!StringUtils.isEmpty(address)) {
+            if (address.length() > 4) {
+                address = address.substring(0, 4) + "...";
             }
             setText(tvAddress, address);
         }
@@ -174,7 +175,7 @@ public class HomeFragment extends BaseFragment {
                 return new GuideFragment();
             } else if (position == 3) {
                 return new PolicyFragment();
-            } else if (position == 4){
+            } else if (position == 4) {
                 return new SchoolFragment();
             }
             return new ConnectUsFragment();

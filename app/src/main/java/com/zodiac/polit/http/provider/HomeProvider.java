@@ -63,10 +63,10 @@ public class HomeProvider extends BaseProvider {
         homeRequest.setCategory(categoryBean);
 
         HomeRequest.AreaCodeBean areaCodeBean = new HomeRequest.AreaCodeBean();
-        if (StringUtils.isEmpty(Constant.cityCode)) {
+        if (StringUtils.isEmpty(Constant.getInstance().getCityCode())) {
             areaCodeBean.setAreaCode("");
         } else {
-            areaCodeBean.setAreaCode(Constant.cityCode);
+            areaCodeBean.setAreaCode(Constant.getInstance().getCityCode());
         }
         homeRequest.setAreaCode(areaCodeBean);
 
@@ -115,8 +115,8 @@ public class HomeProvider extends BaseProvider {
         newsRequest.setPageNo(page);
         newsRequest.setPageSize(LIMIT);
         NewsRequest.AreaCodeBean areaCodeBean = new NewsRequest.AreaCodeBean();
-        if (!StringUtils.isEmpty(Constant.cityCode)) {
-            areaCodeBean.setAreaCode(Constant.cityCode);
+        if (!StringUtils.isEmpty(Constant.getInstance().getCityCode())) {
+            areaCodeBean.setAreaCode(Constant.getInstance().getCityCode());
         } else {
             areaCodeBean.setAreaCode("");
         }

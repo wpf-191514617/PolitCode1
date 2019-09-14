@@ -162,7 +162,7 @@ public class CityListActivity extends BaseActivity implements OnItemClickListene
             }
         };
         locationCityHeaderAdapter.setOnItemClickListener(this);
-        indexStickyView.addIndexHeaderAdapter(locationCityHeaderAdapter);
+       // indexStickyView.addIndexHeaderAdapter(locationCityHeaderAdapter);
     }
 
 

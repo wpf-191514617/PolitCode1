@@ -8,9 +8,33 @@ import com.baidu.location.BDLocation;
 
 public class Constant {
 
+    private static Constant mConstant;
+
+    private Constant(){}
+
+    public static Constant getInstance(){
+        if (mConstant == null){
+            synchronized (Constant.class){
+                if (mConstant == null){
+                    mConstant = new Constant();
+                }
+            }
+        }
+        return mConstant;
+    }
+
+    public String getCityCode() {
+        return cityCode;
+    }
+
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
+    }
+
     public static final String CACHE_NAME = "polit.cache";
-    public static String cityCode = "610000";
+    private String cityCode = "610000";
     public static BDLocation location;
+
 
     public static String BASEURL = "http://service.kjzfw.mil.cn";
    // public static String BASEURL = "http://211.166.16.69:80";

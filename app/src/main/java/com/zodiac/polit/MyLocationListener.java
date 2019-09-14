@@ -113,10 +113,10 @@ public class MyLocationListener implements BDLocationListener {
         //Const.ADDRESS = location.getAddrStr();
         if (!StringUtils.isEmpty(location.getAddrStr()) && !location.getAdCode().equals("CN")) {
             Constant.location = location;
-            Constant.cityCode = location.getAdCode();
-            EventBus.getDefault().post(new EventData<BDLocation>(Constant.CODE_CITY , location));
+            Constant.getInstance().setCityCode(location.getAdCode());
+            EventBus.getDefault().post(new EventData<BDLocation>(Constant.CODE_CITY, location));
         }
-        Trace.d("location---" + Constant.cityCode);
+        // Trace.d("location---" + Constant.cityCode);
     }
 
 }
